@@ -36,10 +36,14 @@ plt.title('data with the best line')
 plt.show()
 ```
 </details>
-
+<details><summary>Вывод</summary>
+  
 ![image](https://github.com/user-attachments/assets/a2c1d172-ed25-4e3e-a696-cf22bb7e2c06)
+</details>
 
 ## Классификация с помощью методов predict, decision_function, predict_proba
+<details><summary>Листинг</summary>
+  
 ```
 import matplotlib.pyplot as plt
 import numpy as np
@@ -102,10 +106,18 @@ plt.title("Probability")
 plt.colorbar(imshow_handle, cax=ax, orientation="horizontal")
 plt.show()
 ```
-![image](https://github.com/user-attachments/assets/fb2c01ac-37a7-471f-acba-dfc28945326f)
+
+</details>
+
+<details><summary>Вывод</summary>
+  
+  ![image](https://github.com/user-attachments/assets/fb2c01ac-37a7-471f-acba-dfc28945326f)
+</details>
 
 ## Кластеризация методом k-means случайно сгенерированных кластеров
-```
+<details><summary>Листинг</summary>
+  
+  ```
 from sklearn.cluster import kmeans_plusplus
 from sklearn.datasets import make_blobs
 import matplotlib.pyplot as plt
@@ -129,9 +141,16 @@ plt.xticks([])
 plt.yticks([])
 plt.show()
 ```
-![image](https://github.com/user-attachments/assets/095082dd-dc6a-4ba0-85db-9cc816a5b3e9)
+</details>
+<details><summary>Вывод</summary>
+
+  ![image](https://github.com/user-attachments/assets/095082dd-dc6a-4ba0-85db-9cc816a5b3e9)
+
+</details>
 
 ## Классификация с помощью нейронной сети и класса MLPClassifier
+<details><summary>Листинг</summary>
+  
 ```
 import numpy as np
 import matplotlib.pyplot as plt
@@ -255,4 +274,164 @@ i += 1
 plt.tight_layout()
 plt.show()
 ```
-![image](https://github.com/user-attachments/assets/ac20176d-03b3-4f47-bd6f-019256790bb9)
+
+</details>
+<details><summary>Вывод</summary>
+  
+  ![image](https://github.com/user-attachments/assets/ac20176d-03b3-4f47-bd6f-019256790bb9)
+
+</details>
+
+## Пример применения линейной регрессии для случайных чисел, расположенных вдоль какой-то кривой линии.
+<details><summary>Листинг</summary>
+
+  ```
+import matplotlib.pyplot as plt
+import numpy as np
+rng = np.random.RandomState(42)
+x = 10 * rng.rand(50)
+y = 2 * x - 1 + rng.randn(50)
+plt.scatter(x, y);
+from sklearn.linear_model import LinearRegression
+model = LinearRegression(fit_intercept=True)
+X = x[:, np.newaxis]
+model.fit(X, y)
+xfit = np.linspace(-1, 11)
+Xfit = xfit[:, np.newaxis]
+yfit = model.predict(Xfit)
+plt.scatter(x, y)
+plt.plot(xfit, yfit);
+```
+</details>
+<details><summary>Вывод</summary>
+
+  ![image](https://github.com/user-attachments/assets/4433416d-8c4a-4701-b97d-460a8e91e8b2)
+
+</details>
+
+## Пример использования наивного Байесова классификатора.
+<details><summary>Листинг</summary>
+
+  ```
+import matplotlib.pyplot as plt
+import numpy as np
+import seaborn as sns
+iris = sns.load_dataset('iris')
+X_iris = iris.drop('species', axis=1)
+y_iris = iris['species']
+from sklearn.model_selection import train_test_split
+Xtrain, Xtest, ytrain, ytest = train_test_split(X_iris, y_iris, random_state=1)
+from sklearn.naive_bayes import GaussianNB
+model = GaussianNB()
+model.fit(Xtrain, ytrain)
+y_model = model.predict(Xtest)
+from sklearn.metrics import accuracy_score
+print(accuracy_score(ytest, y_model))
+```
+</details>
+<details><summary>Вывод</summary>
+
+  ```
+0.9736842105263158
+```
+</details>
+
+## Пример использования метода главных компонент (PCA).
+<details><summary>Листинг</summary>
+
+  ```
+import matplotlib.pyplot as plt
+import numpy as np
+import seaborn as sns
+iris = sns.load_dataset('iris')
+X_iris = iris.drop('species', axis=1)
+y_iris = iris['species']
+from sklearn.model_selection import train_test_split
+Xtrain, Xtest, ytrain, ytest = train_test_split(X_iris, y_iris, random_state=1)
+from sklearn.naive_bayes import GaussianNB
+model = GaussianNB()
+model.fit(Xtrain, ytrain)
+y_model = model.predict(Xtest)
+from sklearn.decomposition import PCA
+model = PCA(n_components=2)
+model.fit(X_iris)
+X_2D = model.transform(X_iris)
+iris['PCA1'] = X_2D[:, 0]
+iris['PCA2'] = X_2D[:, 1]
+sns.lmplot("PCA1", "PCA2", hue='species', data=iris, fit_reg=False);
+```
+</details>
+<details><summary>Вывод</summary>
+
+  ![image](https://github.com/user-attachments/assets/24707c7b-f439-4d19-b385-84426aaed575)
+
+</details>
+
+## Пример загрузки, визуализации и снижения размерности для распознавания цифр.
+<details><summary>Листинг</summary>
+
+  ```
+from sklearn.datasets import load_digits
+digits = load_digits()
+import matplotlib.pyplot as plt
+fig, axes = plt.subplots(10, 10, figsize=(8, 8),
+subplot_kw={'xticks':[], 'yticks':[]},
+gridspec_kw=dict(hspace=0.1, wspace=0.1))
+for i, ax in enumerate(axes.flat):
+ax.imshow(digits.images[i], cmap='binary', interpolation='nearest')
+ax.text(0.05, 0.05, str(digits.target[i]),
+transform=ax.transAxes, color='green')
+```
+</details>
+<details><summary>Вывод</summary>
+
+  ![image](https://github.com/user-attachments/assets/9eb4bb36-ad02-4c5f-a9c5-f89c4eee4f3c)
+
+</details>
+
+## Пример классификации цифр.
+<details><summary>Листинг</summary>
+
+  ```
+from sklearn.datasets import load_digits
+digits = load_digits()
+import matplotlib.pyplot as plt
+fig, axes = plt.subplots(10, 10, figsize=(8, 8),
+subplot_kw={'xticks':[], 'yticks':[]},
+gridspec_kw=dict(hspace=0.1, wspace=0.1))
+for i, ax in enumerate(axes.flat):
+ax.imshow(digits.images[i], cmap='binary', interpolation='nearest')
+ax.text(0.05, 0.05, str(digits.target[i]),
+transform=ax.transAxes, color='green')
+X = digits.data
+y = digits.target
+from sklearn.model_selection import train_test_split
+Xtrain, Xtest, ytrain, ytest = train_test_split(X, y, random_state=0)
+from sklearn.naive_bayes import GaussianNB
+model = GaussianNB()
+model.fit(Xtrain, ytrain)
+y_model = model.predict(Xtest)
+from sklearn.metrics import accuracy_score
+print(accuracy_score(ytest, y_model))
+from sklearn.metrics import confusion_matrix
+mat = confusion_matrix(ytest, y_model)
+import seaborn as sns
+sns.heatmap(mat, square=True, annot=True, cbar=False)
+plt.xlabel('predicted value')
+plt.ylabel('true value');
+fig, axes = plt.subplots(10, 10, figsize=(8, 8),
+subplot_kw={'xticks':[], 'yticks':[]},
+gridspec_kw=dict(hspace=0.1, wspace=0.1))
+test_images = Xtest.reshape(-1, 8, 8)
+for i, ax in enumerate(axes.flat):
+ax.imshow(test_images[i], cmap='binary', interpolation='nearest')
+ax.text(0.05, 0.05, str(y_model[i]),
+transform=ax.transAxes,
+color='green' if (ytest[i] == y_model[i]) else 'red')
+```
+</details>
+<details><summary>Вывод</summary>
+
+  ![image](https://github.com/user-attachments/assets/31861951-f080-4d20-b9df-563c041919da)
+
+</details>
